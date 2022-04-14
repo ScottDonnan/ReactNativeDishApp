@@ -23,9 +23,9 @@ export default function App() {
   // }
 
   function addDish() {
-    const ingredientArr = ingrediantVal.split(' ')
+    const ingredientArr = ingrediantVal.toLowerCase().split(' ')
     
-    let exists = dishes.filter(dish => dish.name === searchVal).length !== 0;
+    let exists = dishes.filter(dish => dish.name.toLowerCase() === searchVal.toLowerCase()).length !== 0;
     if (!exists && searchVal !== '') {
       setDishes([...dishes, {'name': searchVal, 'ingredients': ingredientArr}])
     }
@@ -40,7 +40,7 @@ export default function App() {
     //have array of required ingredients and array of have ingredients
     //only add item if all required ingredients are in have ingredients
     
-    let ingSearchArr = ingrediantS.split(' ')
+    let ingSearchArr = ingrediantS.toLowerCase().split(' ')
     let y = [];
     
     if(ingrediantS === '') {
