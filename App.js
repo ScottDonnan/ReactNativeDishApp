@@ -11,14 +11,14 @@ export default function App() {
   const [lastSelectedList, setLastSelectedList] = useState([]);
   let display;
 
-
+  console.log('console logs to terminal')
 
   if(welcome === 'welcome') {
-    display = <Welcome setWelcome={setWelcome} lists={lists}/>        
+    display = <Welcome setWelcome={setWelcome} lists={lists} setLists={setLists} setLastSelectedList={setLastSelectedList}/>        
   } else if(welcome === 'create-list') {
     display = <CreateList setWelcome={setWelcome} setLists={setLists} setLastSelectedList={setLastSelectedList}/>
   } else if(welcome === 'list') {
-    display = <List list={lastSelectedList} setWelcome={setWelcome}/>
+    display = <List lastSelectedList={lastSelectedList} setWelcome={setWelcome} lists={lists} setLists={setLists}/>
                 
   }
  

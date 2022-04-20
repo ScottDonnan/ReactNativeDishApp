@@ -5,17 +5,18 @@ function CreateList({setWelcome, setLists, setLastSelectedList}) {
     const [input, setInput] = useState('')
 
     function handleNewList(newListName) {
-        setWelcome('list')
-
-        const newList = {
-            'name': newListName,
-            'items': []
+        if(newListName !== '') {
+            setWelcome('list')
+    
+            const newList = {
+                'listName': newListName,
+                'listItems': []
+            }
+    
+            setLastSelectedList(newList);
+    
+            setLists(prev => [...prev, newList])
         }
-
-        setLastSelectedList(newList);
-
-        setLists(prev => [...prev, newList])
-        console.log('test')
     }
     
     return(

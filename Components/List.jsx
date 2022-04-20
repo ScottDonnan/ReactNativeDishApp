@@ -1,9 +1,10 @@
 import { StyleSheet, Text, TextInput, View, Button, ScrollView } from "react-native"
 import { useState } from 'react';
+import { unstable_setLogListeners } from "react-native/Libraries/Utilities/differ/deepDiffer";
 
-function List({list, setWelcome}) {
+function List({lastSelectedList, setWelcome, lists, setLists}) {
 
-    const [items, setItems] = useState([list.items])
+    const [items, setItems] = useState(lastSelectedList.listItems)
     const [searchVal, setSearchVal] = useState('')
     const [ingrediantVal, setIngrediantVAl] = useState('')
     const [ingrediantS, setIngredientS] = useState('')
@@ -13,9 +14,19 @@ function List({list, setWelcome}) {
         const ingredientArr = ingrediantVal.toLowerCase().split(' ')
         
         let exists = items.filter(item => item.name.toLowerCase() === searchVal.toLowerCase()).length !== 0;
-
         if (!exists && searchVal !== '') {
-          setItems([...items, {'name': searchVal, 'ingredients': ingredientArr}])
+            setItems([...items, {'name': searchVal, 'ingredients': ingredientArr}])
+          //need to change to setList
+            let indx;
+            lists.forEach((list, index) => {
+                if(list.listName === lastSelectedList.listName) {
+                    indx = index;
+                }
+            })
+
+            let temp = [...lists];
+            temp[indx].listItems = [...items, {'name': searchVal, 'ingredients': ingredientArr}]
+            setLists([...temp])
         }
       }
     
@@ -51,7 +62,7 @@ function List({list, setWelcome}) {
         }
       }
 
-    const dishes = list.items.map((dish, indx) => {
+    const dishes = items.map((dish, indx) => {
         return (<View key={indx} style={dishStyles.dish}>
                     <Text>{dish.name}:</Text>
                     <ScrollView>
@@ -66,17 +77,17 @@ function List({list, setWelcome}) {
         <>
             <View>
                 <View style={dishStyles.inline}>
-                    <Text>{list.name}:</Text>
+                    <Text>{lastSelectedList.listName}:</Text>
                     <TextInput style={dishStyles.input} value={searchVal} onChangeText={setSearchVal} onSubmitEditing={addDish}></TextInput>
                 </View>
                 <View style={dishStyles.inline}>
-                    <Text>Items:</Text>
+                    <Text>Details:</Text>
                     <TextInput style={dishStyles.input} value={ingrediantVal} onChangeText={setIngrediantVAl}></TextInput>
                 </View>
-                <Button title="Add Dish!" onPress={addDish}></Button>
+                <Button title={`Add ${lastSelectedList.listName}!`} onPress={addDish}></Button>
             </View>
 
-            <Text>My {list.name} List!</Text>
+            <Text>My {lastSelectedList.listName} List!</Text>
             {dishes}
             
 
@@ -110,5 +121,12 @@ const dishStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         padding: 5,
-      }
+    },
+    input: {
+        width: 80,
+        textAlign: 'center',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: '#000000'
+    }
 })
