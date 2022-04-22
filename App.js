@@ -11,8 +11,6 @@ export default function App() {
   const [lastSelectedList, setLastSelectedList] = useState([]);
   let display;
 
-  console.log('console logs to terminal')
-
   if(welcome === 'welcome') {
     display = <Welcome setWelcome={setWelcome} lists={lists} setLists={setLists} setLastSelectedList={setLastSelectedList}/>        
   } else if(welcome === 'create-list') {

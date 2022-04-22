@@ -66,7 +66,7 @@ function List({lastSelectedList, setWelcome, lists, setLists}) {
         return (<View key={indx} style={dishStyles.dish}>
                     <Text>{dish.name}:</Text>
                     <ScrollView>
-                        {dish.ingredients.map(food => <Text key={food}>{food}</Text>)}
+                        {dish.ingredients.map(food => <Text key={food}>{food},</Text>)}
                     </ScrollView>
                     <Button title="X" onPress={() => removeDish(dish)}></Button>
                 </View>)
@@ -110,7 +110,7 @@ const dishStyles = StyleSheet.create({
         alignItems: "center",
         borderBottomColor: "#000000",
         borderBottomWidth: 1,
-        width: 150,
+        width: 200,
     },
     list: {
         paddingTop: 30,
